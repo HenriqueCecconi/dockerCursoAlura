@@ -2,7 +2,7 @@ version: '3'
 services:
     nginx:
         build:
-            dockerfile: ./docker/config/nginx.dockerfile
+            dockerfile: ./docker/nginx.dockerfile
             context: .
         image: henriquececconi/nginx
         container_name: nginx
@@ -10,7 +10,7 @@ services:
             - "80:80"
         networks: 
             - production-network
-            depends_on: 
+        depends_on: 
                 - "node1"
                 - "node2"
                 - "node3"
