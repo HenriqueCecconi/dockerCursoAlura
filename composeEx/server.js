@@ -1,6 +1,6 @@
 const express = require('express')
 let app = express()
-let routes = require('./routes')
+let routes = require('./routes').default
 //Detecta enviroment
 let env = process.env.NODE_ENV;
 if(!env){

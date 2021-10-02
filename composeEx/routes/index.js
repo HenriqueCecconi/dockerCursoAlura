@@ -1,17 +1,17 @@
-var express = require('express');
-const mongoose = require('mongoose');
-var router = express.Router();
+import { Router } from 'express';
+import { connection } from 'mongoose';
+var router = Router();
 require('marko/node-require').install()// Habilita o uso do template Marko
-require('marko/express')
-let Book = require('../models/Book')
-var indexTemplate = require('../views/index.marko')
+import '@marko/express';
+import Book, { find, insertMany } from '../models/Book';
+import indexTemplate from '../views/index.marko';
 
 
 // Busca a página e carrega os livros
 router.get('/', (req, res) => {
     console.log("Exibindo a Home!")
-    if(mongoose.connection.readyState){
-        Book.find({}).then((books) => {
+    if(connection.readyState){
+        find({}).then((books) => {
             res.marko(indexTemplate, {books: books})
         })
     }else{
@@ -66,7 +66,7 @@ router.get('/seed', (req,res) => {
     ]
                     
          
-    Book.insertMany(livros).then(moogoseDocuments => {
+    insertMany(livros).then(moogoseDocuments => {
         console.log(moogoseDocuments, "Inseridos com sucesso")
     }).catch(err => {
         console.log(err)
@@ -75,4 +75,4 @@ router.get('/seed', (req,res) => {
     
 })
 
-module.exports = router;
+export default router;
